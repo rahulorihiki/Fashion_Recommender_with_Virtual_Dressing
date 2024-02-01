@@ -1,0 +1,75 @@
+{% extends 'admin-base.html' %} {% block style %}
+<style>
+  html,
+  body,
+  .intro {
+    height: 100%;
+  }
+  table td,
+  table th {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  thead th {
+    color: #fff;
+  }
+  .card {
+    border-radius: 0.5rem;
+  }
+  .table-scroll {
+    border-radius: 0.5rem;
+  }
+  .table-scroll table thead th {
+    font-size: 1.25rem;
+  }
+  thead {
+    top: 0;
+    position: sticky;
+  }
+</style>
+{% endblock style %} {% block body %}
+<h3 class="mt-7" style="font-family: 'Fantasy', Times, serif">
+  This is the users list page
+</h3>
+<section class="intro mt-4">
+  <div class="bg-image h-100" style="background-color: #f5f7fa">
+    <div class="d-flex align-items-center h-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body p-0">
+                <div
+                  class="table-responsive table-scroll"
+                  data-mdb-perfect-scrollbar="true"
+                  style="position: relative; height: 700px"
+                >
+                  <table class="table table-striped mb-0">
+                    <thead style="background-color: #002d72">
+                      <tr>
+                        <th scope="col">User Id</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">User Email</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for user in users %}
+                      <tr>
+                        <td>{{user[0]}}</td>
+                        <td>{{user[1]}}</td>
+                        <td>{{user[2]}}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock body %}

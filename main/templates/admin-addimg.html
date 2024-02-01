@@ -1,0 +1,195 @@
+{% extends 'admin-base.html' %} {% block style %}
+<style>
+  body {
+    background-image: linear-gradient(
+      to top,
+      #ecedee 0%,
+      #eceeef 75%,
+      #e7e8e9 100%
+    );
+    min-height: 100vh;
+    font: normal 16px sans-serif;
+  }
+
+  .container.gallery-container {
+    background-color: #fff;
+    color: #35373a;
+    min-height: 100vh;
+    border-radius: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.06);
+  }
+
+  .gallery-container h1 {
+    text-align: center;
+    margin-top: 70px;
+    font-family: "Droid Sans", sans-serif;
+    font-weight: bold;
+  }
+
+  .gallery-container p.page-description {
+    text-align: center;
+    max-width: 800px;
+    margin: 25px auto;
+    color: #888;
+    font-size: 18px;
+  }
+
+  .tz-gallery {
+    padding: 40px;
+  }
+
+  .tz-gallery .lightbox img {
+    width: 100%;
+    margin-bottom: 30px;
+    transition: 0.2s ease-in-out;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .tz-gallery .lightbox img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .tz-gallery img {
+    border-radius: 4px;
+  }
+
+  .baguetteBox-button {
+    background-color: transparent !important;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 0;
+    }
+
+    .container.gallery-container {
+      border-radius: 0;
+    }
+  }
+  .searchimgg img {
+    width: 250px;
+    height: 250px;
+    object-fit: scale-down;
+  }
+  .button-36 {
+    background-image: linear-gradient(
+      92.88deg,
+      #455eb5 9.16%,
+      #5643cc 43.89%,
+      #673fd7 64.72%
+    );
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: "Inter UI", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+      "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    height: 4rem;
+    padding: 0 1.6rem;
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+    transition: all 0.5s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+  .button-36:hover {
+    box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+    transition-duration: 0.1s;
+  }
+
+  @media (min-width: 768px) {
+    .button-36 {
+      padding: 0 2.6rem;
+    }
+  }
+  .imagecross {
+    background-image: url("http://www.hdwallpapers.in/walls/windows_xp_bliss-wide.jpg");
+    background-size: cover;
+    text-align: center;
+    font-size: 24px;
+    font-family: sans-serif;
+  }
+  a {
+    color: red;
+  }
+</style>
+{% endblock style%} {% block body %}
+<div class="container">
+  <h2 class="mt-7" style="font-family: 'Fantasy', Times, serif">
+    Search image to add to Database
+  </h2>
+  <form
+    class="d-flex my-3"
+    role="search"
+    ,
+    method="post"
+    action="{{url_for('admin_add_image')}}"
+  >
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Enter the search value"
+      aria-label="Search"
+      name="imgsearch"
+    /><br />
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Enter the number of images"
+      aria-label="Search"
+      name="imgquantity"
+    /><br />
+    <button
+      class="btn btn-outline-success"
+      style="margin: 0.5rem"
+      type="submit"
+    >
+      Search
+    </button>
+  </form>
+  {% if urls == "noimages" %}
+  <h2 style="font-family: 'Fantasy', Times, serif">
+    Welcome , Enter the Images to be scraped in the above searchbar.
+  </h2>
+  {% else %}
+  <div class="container gallery-container mt-6">
+    <br /><br />
+    <!-- HTML !-->
+
+    <form method="post" action="{{url_for('admin_remove_image' , a = urls)}}">
+      <button class="button-36" role="button">Add Images</button>
+      <center>
+        <h4 class="mt-2" style="font-family: 'Fantasy', Times, serif">
+          Google Search Results are as follows :
+        </h4>
+      </center>
+    </form>
+
+    <!-- <p class="page-description text-center">Grid Layout With Zoom Effect</p> -->
+
+    <div class="tz-gallery">
+      <div class="row">
+        {% for url in urls %}
+        <div class="col-sm-6 col-md-4 searchimgg">
+          <a class="lightbox" href="{{url}}" target="_blank">
+            <img src="{{url}}" alt="Bridge" />
+          </a>
+          <a href="{{url_for('admin_remove_image' , a = urls , b = url)}}"
+            ><div class="imagecross">X</div></a
+          >
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock body %}
